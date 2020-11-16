@@ -11,7 +11,7 @@ interface Store {
 const initialState: Store = {
     email: null,
     password: null,
-    token: null
+    token: "asdasd"
 
 }
 

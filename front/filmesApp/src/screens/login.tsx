@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Alert } from 'react-native'
 import Input from './../components/input'
 import Button from './../components/button'
 import { useSelector, useDispatch } from 'react-redux'
@@ -13,6 +13,11 @@ export default function Login({ navigation }: any) {
 
     const dispatch = useDispatch()
     const selector: any = useSelector<any>(state => state)
+
+    React.useEffect(() => {
+        if (selector.token) navigation.navigate("Filmes")
+    },[])
+
 
     const [userLogin, setUserLogin] = React.useState<UserLogin>({ email: "", password: "" })
 
@@ -43,12 +48,14 @@ export default function Login({ navigation }: any) {
         } catch (error){ 
             console.log("ERROR")
             console.log(error)
+            Alert.alert("Usuário não encontrado!", "Tente novamente")
+            navigation.navigate("Filmes")
         }
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Login: {selector.email}</Text>
+            <Text style={styles.title}>Login</Text>
             <Input
                 onchange={text => setUserLogin({ ...userLogin, email: text })}
                 placeHolder={"Email"}

@@ -4,7 +4,7 @@ import { Table, Row, Rows } from 'react-native-table-component'
 
 interface Props {
     head: string[]
-    data: []
+    data: any[]
 }
 
 export default function TableComponent(props: Props) {
@@ -13,13 +13,8 @@ export default function TableComponent(props: Props) {
     return (
         <View>
             <Table borderStyle={{ borderWidth: 2, borderColor: "#C8E1FF" }}>
-                <Row data={["asas", "sdsd", "sdfd"]} />
-                <Rows data={[
-                    ["1", "Rambo", "asdasd"],
-                    ["2", "Rambo", "asdasd"],
-                    ["3", "Rambo", "asdasd"],
-                    ["4", "Rambo", "asdasd"],
-                ]} />
+                <Row data={head} />
+                <Rows data={data} />
             </Table>
         </View>
     )
