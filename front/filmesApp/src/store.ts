@@ -3,15 +3,23 @@ import { persistStore, persistReducer } from 'redux-persist'
 import AsyncStorage from '@react-native-community/async-storage'
 import storage from 'redux-persist/lib/storage'
 
-const initialState = {
+interface Store {
     user: {
-        email: "carlaoooooo",
+        email: string | null
+        password: string | null
+        token: string | null
+    }
+}
+
+const initialState: Store = {
+    user: {
+        email: null,
         password: null,
         token: null
     }
 }
 
-function userReducer(state = initialState, action: any) {
+function userReducer(state: Store = initialState, action: any) {
     switch (action.type) {
         case "SAVE_USER":
             return { ...state, user: action.payload }
