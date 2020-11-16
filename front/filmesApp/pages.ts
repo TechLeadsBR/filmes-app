@@ -9,15 +9,15 @@ interface Routes {
 
 export const pages: Routes[] = [
     {
+        name: "Login",
+        component: LoginScreen
+    },    
+    {
         name: "Filmes",
         component: FilmesScreen
     },
     {
         name: "Generos",
         component: GenerosScreen
-    },
-    {
-        name: "Login",
-        component: LoginScreen
     }
 ]

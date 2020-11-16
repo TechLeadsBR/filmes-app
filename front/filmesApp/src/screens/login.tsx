@@ -2,26 +2,53 @@ import * as React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import Input from './../components/input'
 import Button from './../components/button'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 interface UserLogin {
     email: string
     password: string
 }
 
-export default function Login() {
+export default function Login({ navigation }: any) {
 
+    const dispatch = useDispatch()
     const selector: any = useSelector<any>(state => state)
 
     const [userLogin, setUserLogin] = React.useState<UserLogin>({ email: "", password: "" })
 
-    const requestAPILogin = () => {
-        console.log(userLogin)
+    const requestAPILogin = async () => {
+        const bodyRequest = {
+            email: userLogin.email,
+            senha: userLogin.password
+        }
+
+        try {
+            const request = await fetch("http://localhost:5000/api/login", {
+                body: JSON.stringify(bodyRequest),
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+
+            const response = await request.json()
+            const token = response.token
+            dispatch({ type: "SAVE_TOKEN", payload: {
+                token,
+                email: userLogin.email,
+                password: userLogin.password
+            } })
+
+            navigation.navigate("Filmes")
+        } catch (error){ 
+            console.log("ERROR")
+            console.log(error)
+        }
     }
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Login: {selector.user.email}</Text>
+            <Text style={styles.title}>Login: {selector.email}</Text>
             <Input
                 onchange={text => setUserLogin({ ...userLogin, email: text })}
                 placeHolder={"Email"}

@@ -8,7 +8,10 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
 
 const Stack = createStackNavigator()
-export default function App() {
+export default function App({ navigation }: any) {
+
+
+
 	return (
 		<Provider store={store}>
 			<PersistGate loading={null} persistor={persistor}>
