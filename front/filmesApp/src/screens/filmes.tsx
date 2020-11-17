@@ -8,22 +8,35 @@ import { useRequestAPI } from './../services/api'
 export default function Filmes({ navigation }: any) {
 
     const selector: any = useSelector<any>(state => state)
-    const [films, setFilms] = useState([])
+    const [films, setFilms] = useState<any>([])
 
-    React.useEffect(() => {
+    useEffect(() => {
         console.log('Montou')
         if (!selector.token) navigation.navigate("Login")
     }, [])
 
-    const request = useRequestAPI("/")
+    const request = useRequestAPI("/filmes")
+
+    const createDataToTable = (data: any) => {
+        const array: any = []
+        array.push(data.idFilme)
+        array.push(data.titulo)
+        array.push(data.idGenero)
+
+        setFilms((films: any) => {
+            return [
+                ...films,
+                array
+            ]
+        })
+    }
 
     useEffect(() => {
         request()
-            .then(request => {
-                console.log(request)
-                const filmsArrayToState = request.filter((fi: any) => {
+            .then((response: any) => {
+                console.log(response)
 
-                })
+                response.map((data: any) => createDataToTable(data))
             })
             .catch(error => console.log(error))
     }, [])

@@ -10,7 +10,7 @@ export const useRequestAPI = (path: string) => {
                     "Authorization": "Bearer " + token
                 }
             })
-            const response = await request
+            const response = await request.json()
             resolve(response)
         } catch (error) {
             reject(error)
